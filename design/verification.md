@@ -98,3 +98,12 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46).
 - Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
 - Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.
+
+---
+
+## 2026-11-27 ~04:45 IST — difficulty tuning: Level 4 'Crossroads' margin smoothed (run 10)
+- Change (logic.js config only, client.js untouched): L4 enemy 220 → 740 and the final ×3 gate softened to ×2 (row 9). Pilot win margin 13.64× → **2.62×** (pilot crowd 1,938 vs enemy 740, win tick 821). All other levels unchanged (L1 3.56×, L2 5.98×, L3 7.23×, L5 10.11×, L6 2.67×, L7 2.80×, L8 2.62×, L9 2.72×, L10 2.70× — next tuning runs take the next most extreme level, L5 10.11×).
+- Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46).
+- Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
+- Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.

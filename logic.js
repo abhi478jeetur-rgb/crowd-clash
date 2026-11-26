@@ -52,7 +52,7 @@ const config = {
     {
       name: 'Crossroads',
       start: 20,
-      enemy: 220,
+      enemy: 740,
       rows: [
         { gap: 80, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 45 } },
         { gap: 80, kind: 'gate', left: { k: '+', v: 60 }, right: { k: 'x', v: 2 } },
@@ -62,7 +62,7 @@ const config = {
         { gap: 80, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '-', v: 50 } },
         { gap: 80, kind: 'gate', left: { k: '+', v: 90 }, right: { k: 'x', v: 2 } },
         { gap: 80, kind: 'trap', x0: 2.0, x1: 4.4, loss: 25 },
-        { gap: 80, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 120 } }
+        { gap: 80, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 120 } }
       ]
     },
     {
