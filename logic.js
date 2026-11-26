@@ -68,7 +68,7 @@ const config = {
     {
       name: 'Spike Alley',
       start: 25,
-      enemy: 380,
+      enemy: 900,
       rows: [
         { gap: 78, kind: 'gate', left: { k: '+', v: 40 }, right: { k: 'x', v: 2 } },
         { gap: 78, kind: 'trap', x0: 4.2, x1: 6.6, loss: 25 },
@@ -76,7 +76,7 @@ const config = {
         { gap: 78, kind: 'trap', x0: 1.6, x1: 4.0, loss: 25 },
         { gap: 78, kind: 'gate', left: { k: '-', v: 60 }, right: { k: 'x', v: 2 } },
         { gap: 78, kind: 'bonus', x0: 5.6, x1: 8.0, gain: 50 },
-        { gap: 78, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 100 } },
+        { gap: 78, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 100 } },
         { gap: 78, kind: 'trap', x0: 3.2, x1: 5.6, loss: 30 },
         { gap: 78, kind: 'gate', left: { k: '+', v: 150 }, right: { k: 'x', v: 2 } },
         { gap: 78, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '/', v: 2 } }
