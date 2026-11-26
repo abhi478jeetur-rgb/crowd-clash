@@ -53,3 +53,12 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Local harness: ALL PASS (pilot wins all 10 levels, idle loss tick 583, always-left loss tick 472, deterministic, referenceRoute win).
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46). Playtest authoritative state confirms clashStart + clashHit events fired (clashTicks 5, enemyLeft 0).
 - Cover recaptured: early-run frame (crowd of 10, side stands + lane dividers visible). Note: cover #start click again reported "Node is either not clickable or not an Element" but the game still started and the screenshot saved (same flaky timing as run 3, not a code issue).
+
+---
+
+## 2026-11-27 ~02:15 IST — difficulty tuning: Level 10 'Grand Clash' margin smoothed (run 5)
+- Change (logic.js config only, client.js untouched): L10 enemy 4,500 → 45,000 and four ×3 gates softened to ×2 (rows 2, 4, 6, 8). Pilot win margin 127.44× → **2.70×** (pilot crowd 121,648 vs enemy 45,000, win tick 893). All other levels unchanged (L1 3.56×, L2 5.98×, L3–L9 still >6× — next tuning runs take the next most extreme level).
+- Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all assertions PASS (playerCount, phase win, scriptedMovement 3.9, mobileHorizontalOverflow, 4 self-tests), phase reached win (tick 579, crowd 15).
+- Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
+- Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.
