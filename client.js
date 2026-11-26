@@ -595,17 +595,18 @@ function drawPlayerCrowd(state, sx, sy, scale) {
   const crowd = state.crowd;
   const px = state.players[state.selfId].x;
   const pz = CROWD_Z;
-  const count = Math.min(44, crowd);
+  const count = Math.min(60, crowd);
   const tick = state.tick;
 
   for (let i = 0; i < count; i++) {
     const angle = (i * 2.399963) % (Math.PI * 2);
-    const r = Math.sqrt(i / count) * 1.1;
+    const r = Math.sqrt(i / count) * 1.7;
     const ox = Math.cos(angle) * r;
     const oz = Math.sin(angle) * r * 0.6;
     const bob = Math.sin(tick * 0.35 + i) * 0.08;
     const hue = (i * 37) % 360;
-    drawFigure(sx(px + ox), sy(pz + oz + bob), scale, `hsl(${hue},70%,60%)`, i);
+    const fx = Math.max(0.35, Math.min(W - 0.35, px + ox));
+    drawFigure(sx(fx), sy(pz + oz + bob), scale, `hsl(${hue},70%,60%)`, i, 1.45);
   }
 
   // Count badge
@@ -622,8 +623,8 @@ function drawPlayerCrowd(state, sx, sy, scale) {
   ctx2d.fillText(String(crowd), sx(px), by + bh * 0.72);
 }
 
-function drawFigure(x, y, scale, color, idx) {
-  const r = scale * 0.12;
+function drawFigure(x, y, scale, color, idx, sizeMult) {
+  const r = scale * 0.12 * (sizeMult || 1);
   ctx2d.fillStyle = color;
   ctx2d.beginPath();
   ctx2d.arc(x, y - r * 1.5, r * 0.6, 0, Math.PI * 2);
@@ -792,7 +793,7 @@ window.__omGame = {
     return {
       fps,
       tick: state ? state.tick : 0,
-      entities: state ? (state.activeRows ? state.activeRows.length : 0) + Math.min(44, state.crowd) : 0
+      entities: state ? (state.activeRows ? state.activeRows.length : 0) + Math.min(60, state.crowd) : 0
     };
   },
   sendAction(action) {

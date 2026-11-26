@@ -29,3 +29,13 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Visual density is v1-minimal: runners are small and the track is sparse between gates. Planned polish: larger runner glyphs, wider crowd spread, taller glowing gate panels, side-stand decorations, clash close-up framing.
 - Human play-feel (steering weight, gate readability at full speed) is judged from playtest frames; simulation proves rules and balance only.
 - Audio is synthesized WebAudio; headless playtest cannot prove how it sounds.
+
+---
+
+## 2026-11-27 ~00:15 IST — visual density improvement (run 2)
+- Change: runner glyphs 1.45× bigger (drawFigure size multiplier), crowd spread radius 1.1 → 1.7 world units with figures clamped to the track (x 0.35–8.65), drawn figures cap 44 → 60, getStats entity count updated to match. logic.js untouched.
+- Local harness: ALL PASS (pilot wins all 10 levels, idle loss tick 583, always-left loss tick 472, deterministic, referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win.
+- Cover recaptured: new frame shows the bigger, wider-spread crowd (10 runners, count badge visible) — headless cover capture runs slower than real time, so the frame is early-run; the playtest late-run frame confirms the denser crowd mid-game.
+- Notes: first reference-simulate call failed transiently ("Tool failed") right after the Studio restart; retry passed. First cover attempt failed on the Space key ("Invalid scripted key") — mouse click on #start works instead.
+- Visual density (glyphs + spread) now done; remaining polish: taller glowing gate panels / side-stand decorations, clash framing, difficulty tuning, sound layering, levels 11–12.
