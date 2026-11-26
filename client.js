@@ -440,6 +440,22 @@ function render() {
   ctx2d.stroke();
   ctx2d.setLineDash([]);
 
+  // Scrolling dashed lane dividers (quarter lines)
+  ctx2d.strokeStyle = 'rgba(34,211,238,0.14)';
+  ctx2d.lineWidth = 1;
+  ctx2d.setLineDash([6, 14]);
+  ctx2d.lineDashOffset = -dist * scale * 3;
+  for (const lx of [W / 4, (3 * W) / 4]) {
+    ctx2d.beginPath();
+    ctx2d.moveTo(sx(lx), sy(0));
+    ctx2d.lineTo(sx(lx), sy(H));
+    ctx2d.stroke();
+  }
+  ctx2d.setLineDash([]);
+
+  // Side-stand decorations scrolling with the track
+  drawSideStands(dist, sx, sy, scale);
+
   // Progress rail
   const totalDist = 200;
   const prog = Math.min(1, dist / totalDist);
@@ -493,9 +509,9 @@ function render() {
 function drawRow(row, sx, sy, scale) {
   const z = row.z;
   if (row.kind === 'gate') {
-    const halfW = W / 2;
-    const top = sy(z - 0.9);
-    const bot = sy(z + 0.2);
+const halfW = W / 2;
+    const top = sy(z - 1.15);
+    const bot = sy(z + 0.45);
     const h = bot - top;
     // Left panel
     drawGatePanel(sx(0), top, halfW * scale, h, row.left, scale);
@@ -551,19 +567,129 @@ function drawRow(row, sx, sy, scale) {
 
 function drawGatePanel(x, y, w, h, op, scale) {
   const colors = { '+': '#22c55e', 'x': '#a855f7', '-': '#ef4444', '/': '#f59e0b' };
-  const col = colors[op.k] || '#ffffff';
-  ctx2d.fillStyle = col + '33';
+  const col = colors[op.k] || '#94a3b8';
+  const label = op.k === 'x' ? '\u00d7' + op.v : op.k === '/' ? '\u00f7' + op.v : op.k + op.v;
+
+  ctx2d.save();
+
+  ctx2d.shadowColor = col;
+  ctx2d.shadowBlur = 14;
+  ctx2d.fillStyle = col + '2e';
   ctx2d.fillRect(x, y, w, h);
+  ctx2d.shadowBlur = 0;
+
+  const bandH = h * 0.18;
+  ctx2d.fillStyle = col + '55';
+  ctx2d.fillRect(x, y + h - bandH, w, bandH);
+
   ctx2d.strokeStyle = col;
-  ctx2d.lineWidth = 2;
+  ctx2d.lineWidth = 3;
   ctx2d.strokeRect(x, y, w, h);
+
+  ctx2d.strokeStyle = 'rgba(255,255,255,0.35)';
+  ctx2d.lineWidth = 1;
+  ctx2d.strokeRect(x + 4, y + 4, w - 8, h - 8);
+
+  const stripH = Math.max(4, h * 0.09);
   ctx2d.fillStyle = col;
-  ctx2d.font = `bold ${Math.floor(scale * 0.55)}px sans-serif`;
+  ctx2d.fillRect(x, y, w, stripH);
+
+  ctx2d.fillStyle = '#ffffff';
+  ctx2d.font = 'bold ' + Math.floor(h * 0.07) + 'px sans-serif';
   ctx2d.textAlign = 'center';
   ctx2d.textBaseline = 'middle';
-  const label = op.k === 'x' ? '×' + op.v : op.k === '/' ? '÷' + op.v : op.k + op.v;
-  ctx2d.fillText(label, x + w / 2, y + h / 2);
+  ctx2d.fillText('\u25bc', x + w / 2, y + stripH / 2);
+
+  const fontSize = Math.floor(scale * 0.6);
+  ctx2d.font = 'bold ' + fontSize + 'px sans-serif';
+  ctx2d.textAlign = 'center';
+  ctx2d.textBaseline = 'middle';
+
+  const metrics = ctx2d.measureText(label);
+  const textW = metrics.width;
+  const padX = scale * 0.18;
+  const padY = scale * 0.12;
+  const pillW = textW + padX * 2;
+  const pillH = fontSize + padY * 2;
+  const cx = x + w / 2;
+  const cy = y + h / 2;
+  const pillX = cx - pillW / 2;
+  const pillY = cy - pillH / 2;
+
+  ctx2d.fillStyle = 'rgba(5,8,20,0.72)';
+  if (typeof roundRect === 'function') {
+    roundRect(ctx2d, pillX, pillY, pillW, pillH, Math.min(pillH / 2, scale * 0.2));
+    ctx2d.fill();
+  } else {
+    ctx2d.fillRect(pillX, pillY, pillW, pillH);
+  }
+
+  ctx2d.fillStyle = col;
+  ctx2d.fillText(label, cx, cy);
+
   ctx2d.textBaseline = 'alphabetic';
+  ctx2d.restore();
+}
+
+function drawSideStands(dist, sx, sy, scale) {
+  const d = (typeof dist === 'number' && isFinite(dist)) ? dist : 0;
+  const spectatorColors = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#f472b6'];
+  const stepColors = ['#2b3a6b', '#33448a'];
+  const stepW = 0.5;
+  const stepH = 0.28;
+  const edgeXs = [0.28, W - 0.28];
+
+  for (let i = 0; i < 8; i++) {
+    const baseZ = ((i * 6 - (d % 48)) % 48 + 48) % 48;
+    if (baseZ < -1 || baseZ > H + 1) continue;
+
+    for (let e = 0; e < edgeXs.length; e++) {
+      const wx = edgeXs[e];
+      const px = sx(wx - stepW / 2);
+      const pw = stepW * scale;
+
+      for (let s = 0; s < 3; s++) {
+        const wz = baseZ - s * stepH;
+        const py = sy(wz - stepH);
+        const ph = stepH * scale;
+
+        ctx2d.fillStyle = stepColors[s % 2];
+        ctx2d.fillRect(px, py, pw, ph);
+        ctx2d.strokeStyle = '#22d3ee55';
+        ctx2d.lineWidth = 1;
+        ctx2d.strokeRect(px + 0.5, py + 0.5, pw - 1, ph - 1);
+
+        const dotR = scale * 0.05;
+        for (let k = 0; k < 3; k++) {
+          const dx = px + pw * ((k + 1) / 4);
+          const dy = py + ph * 0.5;
+          ctx2d.fillStyle = spectatorColors[(i + s + k) % 5];
+          ctx2d.beginPath();
+          ctx2d.arc(dx, dy, dotR, 0, Math.PI * 2);
+          ctx2d.fill();
+        }
+
+        if (s === 1) {
+          const poleX = px + pw * 0.5;
+          const poleTop = py - 0.5 * scale;
+          ctx2d.strokeStyle = '#e5e7eb';
+          ctx2d.lineWidth = 1;
+          ctx2d.beginPath();
+          ctx2d.moveTo(poleX, py);
+          ctx2d.lineTo(poleX, poleTop);
+          ctx2d.stroke();
+
+          ctx2d.fillStyle = spectatorColors[(i + 2) % 5];
+          ctx2d.beginPath();
+          ctx2d.moveTo(poleX, poleTop);
+          ctx2d.lineTo(poleX + 0.28 * scale, poleTop + 0.12 * scale);
+          ctx2d.lineTo(poleX, poleTop + 0.24 * scale);
+          ctx2d.closePath();
+          ctx2d.fill();
+        }
+      }
+    }
+  }
 }
 
 function drawEnemyCrowd(clash, sx, sy, scale) {
