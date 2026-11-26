@@ -89,3 +89,12 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 579, crowd 15).
 - Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
 - Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates. First validate/simulate attempt failed on a `~` path-expansion bug in the shell helper (MCP client never ran); retried with the absolute path and all gates passed.
+
+---
+
+## 2026-11-27 ~04:15 IST — difficulty tuning: Level 7 'Trap City' margin smoothed (run 9)
+- Change (logic.js config only, client.js untouched): L7 enemy 1,000 → 2,700 and two ×3 gates softened to ×2 (rows 5, 9). Pilot win margin 16.56× → **2.80×** (pilot crowd 7,551 vs enemy 2,700, win tick 893). All other levels unchanged (L1 3.64×, L2 6.00×, L3 7.25×, L4 13.64×, L5 10.11×, L6 2.75×, L8 2.70×, L9 2.80×, L10 2.78× — next tuning runs take the next most extreme level, L4 13.64×).
+- Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46).
+- Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
+- Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.

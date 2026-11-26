@@ -102,17 +102,17 @@ const config = {
     {
       name: 'Trap City',
       start: 35,
-      enemy: 1000,
+      enemy: 2700,
       rows: [
         { gap: 72, kind: 'gate', left: { k: '+', v: 60 }, right: { k: 'x', v: 2 } },
         { gap: 72, kind: 'trap', x0: 3.0, x1: 5.4, loss: 40 },
         { gap: 72, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 110 } },
         { gap: 72, kind: 'trap', x0: 5.4, x1: 7.8, loss: 40 },
-        { gap: 72, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '-', v: 80 } },
+        { gap: 72, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '-', v: 80 } },
         { gap: 72, kind: 'bonus', x0: 3.4, x1: 5.8, gain: 75 },
         { gap: 72, kind: 'gate', left: { k: '/', v: 2 }, right: { k: 'x', v: 2 } },
         { gap: 72, kind: 'trap', x0: 1.2, x1: 3.8, loss: 45 },
-        { gap: 72, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 220 } },
+        { gap: 72, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 220 } },
         { gap: 72, kind: 'gate', left: { k: '+', v: 260 }, right: { k: 'x', v: 2 } },
         { gap: 72, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '/', v: 3 } }
       ]
