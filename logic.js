@@ -85,17 +85,17 @@ const config = {
     {
       name: 'Big League',
       start: 30,
-      enemy: 650,
+      enemy: 2150,
       rows: [
         { gap: 75, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 55 } },
         { gap: 75, kind: 'gate', left: { k: '+', v: 80 }, right: { k: 'x', v: 2 } },
         { gap: 75, kind: 'trap', x0: 2.4, x1: 5.2, loss: 35 },
-        { gap: 75, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 90 } },
+        { gap: 75, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 90 } },
         { gap: 75, kind: 'gate', left: { k: '-', v: 100 }, right: { k: 'x', v: 2 } },
         { gap: 75, kind: 'bonus', x0: 1.0, x1: 3.4, gain: 60 },
         { gap: 75, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 160 } },
         { gap: 75, kind: 'trap', x0: 4.8, x1: 7.4, loss: 35 },
-        { gap: 75, kind: 'gate', left: { k: '+', v: 200 }, right: { k: 'x', v: 3 } },
+        { gap: 75, kind: 'gate', left: { k: '+', v: 200 }, right: { k: 'x', v: 2 } },
         { gap: 75, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '-', v: 150 } }
       ]
     },

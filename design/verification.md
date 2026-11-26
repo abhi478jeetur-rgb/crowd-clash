@@ -80,3 +80,12 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46).
 - Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
 - Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.
+
+---
+
+## 2026-11-27 ~03:45 IST — difficulty tuning: Level 6 'Big League' margin smoothed (run 8)
+- Change (logic.js config only, client.js untouched): L6 enemy 650 → 2,150 and two ×3 gates softened to ×2 (rows 4, 9). Pilot win margin 19.94× → **2.67×** (pilot crowd 5,744 vs enemy 2,150, win tick 851). All other levels unchanged (L1 3.56×, L2 5.98×, L3 7.23×, L4 13.64×, L5 10.11×, L7 16.56×, L8 2.62×, L9 2.72×, L10 2.70× — next tuning runs take the next most extreme level, L7 16.56×).
+- Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 579, crowd 15).
+- Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
+- Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates. First validate/simulate attempt failed on a `~` path-expansion bug in the shell helper (MCP client never ran); retried with the absolute path and all gates passed.
