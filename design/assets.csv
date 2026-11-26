@@ -1,0 +1,5 @@
+asset,source,license,cost,role,status
+All visuals,Procedural canvas 2D drawn in client.js (no image files),Original,0,Track gates traps crowds particles,Shipped
+All audio,Synthesized WebAudio in client.js (no audio files),Original,0,SFX + BGM sequencer,Shipped
+assets/icon.svg,Kit scaffold icon (kept),Original,0,Favicon,Shipped
+assets/cover.png,openmotion_game_capture_cover (headless screenshot),Original,0,Store cover 1280x720,Generated at delivery
