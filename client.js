@@ -32,6 +32,11 @@ let bgmTick = 0;
 let lastEventId = 0;
 let particles = [];
 let popups = [];
+let shake = 0;
+let hitStopUntil = 0;
+let clashBannerUntil = 0;
+let prevClashEnemy = 0;
+let prevClashCrowd = 0;
 let stars = 0;
 let unlocked = 1;
 let starsMap = {};
@@ -73,6 +78,11 @@ function initGame(level) {
   lastEventId = 0;
   particles = [];
   popups = [];
+  shake = 0;
+  hitStopUntil = 0;
+  clashBannerUntil = 0;
+  prevClashEnemy = 0;
+  prevClashCrowd = 0;
   bgmTick = 0;
   heldDx = 0;
   pointerActive = false;
@@ -349,9 +359,29 @@ function handleEvent(ev) {
     spawnParticles(ev.x, ev.z, '#fbbf24', 10);
   } else if (ev.kind === 'clashHit') {
     playClashHit();
+    const dmg = Math.max(0, prevClashEnemy - ev.enemyLeft);
+    const lost = Math.max(0, prevClashCrowd - ev.crowd);
+    prevClashEnemy = ev.enemyLeft;
+    prevClashCrowd = ev.crowd;
+    shake = 9;
+    hitStopUntil = performance.now() + 110;
+    if (dmg > 0) popups.push({ x: W / 2, z: 1.1, text: '-' + dmg, color: '#f87171', life: 45 });
+    if (lost > 0) {
+      const px = (state.players && state.players[state.selfId]) ? state.players[state.selfId].x : W / 2;
+      popups.push({ x: px, z: CROWD_Z - 2.2, text: '-' + lost, color: '#fb923c', life: 45 });
+    }
+    spawnParticles(W / 2, 2.2, '#f87171', 12);
+    const cx = (state.players && state.players[state.selfId]) ? state.players[state.selfId].x : W / 2;
+    spawnParticles(cx, CROWD_Z, '#22d3ee', 6);
   } else if (ev.kind === 'clashStart') {
     state.clashStartCrowd = state.crowd;
     state.clashStartEnemy = ev.enemy;
+    prevClashEnemy = ev.enemy;
+    prevClashCrowd = state.crowd;
+    clashBannerUntil = performance.now() + 1400;
+    shake = 6;
+    playTone(220, 'sawtooth', 0.35, 0.07, 110);
+    playNoise(0.2, 0.05, 0);
   } else if (ev.kind === 'idle') {
     state.lossReason = 'idle';
   } else if (ev.kind === 'loss') {
@@ -403,6 +433,9 @@ function render() {
   ctx2d.fillRect(0, 0, cw, ch);
 
   if (!state) return;
+
+  ctx2d.save();
+  if (shake > 0) ctx2d.translate((Math.random() - 0.5) * shake, (Math.random() - 0.5) * shake);
 
   const scale = Math.min(cw / W, ch / H);
   const ox = (cw - W * scale) / 2;
@@ -501,6 +534,35 @@ function render() {
     ctx2d.fillText(p.text, sx(p.x), sy(p.z));
   }
   ctx2d.globalAlpha = 1;
+
+  if (state.clash) {
+    const alpha = 0.10 + 0.06 * Math.sin(state.clashTicks * 0.5);
+    ctx2d.fillStyle = `rgba(239,68,68,${alpha})`;
+    ctx2d.fillRect(0, 0, cw, 14);
+    ctx2d.fillRect(0, ch - 14, cw, 14);
+    ctx2d.fillRect(0, 0, 14, ch);
+    ctx2d.fillRect(cw - 14, 0, 14, ch);
+  }
+  if (performance.now() < clashBannerUntil) {
+    const bw = cw * 0.7;
+    const bh = 64;
+    const bx = cw / 2 - bw / 2;
+    const by = ch * 0.28 - bh / 2;
+    ctx2d.save();
+    ctx2d.shadowBlur = 24;
+    ctx2d.shadowColor = '#ef4444';
+    ctx2d.fillStyle = 'rgba(5,8,20,0.8)';
+    roundRect(ctx2d, bx, by, bw, bh, bh / 2);
+    ctx2d.fill();
+    ctx2d.restore();
+    ctx2d.fillStyle = '#f87171';
+    ctx2d.font = 'bold 34px sans-serif';
+    ctx2d.textAlign = 'center';
+    ctx2d.textBaseline = 'middle';
+    ctx2d.fillText('⚔ CLASH!', cw / 2, ch * 0.28);
+    ctx2d.textBaseline = 'alphabetic';
+  }
+  ctx2d.restore();
 
   // HUD
   hud.textContent = `Lv ${state.level + 1} · 👥 ${state.crowd} · Score ${state.score}`;
@@ -693,28 +755,59 @@ function drawSideStands(dist, sx, sy, scale) {
 }
 
 function drawEnemyCrowd(clash, sx, sy, scale) {
-  const count = Math.min(30, Math.ceil(clash.enemyLeft / 20));
+  const count = Math.min(60, Math.ceil(clash.enemyLeft / 12));
   const baseX = W / 2;
   const baseZ = 2.2;
+
+  // Soft red glow behind formation
+  ctx2d.fillStyle = 'rgba(248,113,113,0.18)';
+  ctx2d.beginPath();
+  ctx2d.ellipse(sx(baseX), sy(baseZ), 2.2 * scale, 1.1 * scale, 0, 0, Math.PI * 2);
+  ctx2d.fill();
+
+  // Dashed arena ring
+  ctx2d.strokeStyle = 'rgba(248,113,113,0.6)';
+  ctx2d.lineWidth = 2;
+  ctx2d.setLineDash([8, 6]);
+  ctx2d.beginPath();
+  ctx2d.ellipse(sx(baseX), sy(baseZ), 2.4 * scale, 1.2 * scale, 0, 0, Math.PI * 2);
+  ctx2d.stroke();
+  ctx2d.setLineDash([]);
+
+  const frontCount = Math.ceil(count * 0.6);
   for (let i = 0; i < count; i++) {
-    const angle = (i / count) * Math.PI * 2;
-    const r = 0.8 + (i % 3) * 0.3;
-    const ex = baseX + Math.cos(angle) * r;
-    const ez = baseZ + Math.sin(angle) * r * 0.5;
-    drawFigure(sx(ex), sy(ez), scale, '#f87171', i);
+    let ex, ez, color;
+    if (i < frontCount) {
+      const t = frontCount > 1 ? i / (frontCount - 1) : 0.5;
+      const angle = (t - 0.5) * Math.PI;
+      ex = baseX + Math.sin(angle) * 1.5;
+      ez = baseZ + Math.cos(angle) * 0.5;
+      color = '#f87171';
+    } else {
+      const j = i - frontCount;
+      const backCount = count - frontCount;
+      const t = backCount > 1 ? j / (backCount - 1) : 0.5;
+      const angle = (t - 0.5) * Math.PI;
+      ex = baseX + Math.sin(angle) * 2.1;
+      ez = baseZ - 0.9 + Math.cos(angle) * 0.5;
+      color = '#ef4444';
+    }
+    ex = Math.max(0.4, Math.min(W - 0.4, ex));
+    drawFigure(sx(ex), sy(ez), scale, color, i, 1.35);
   }
+
   // Count badge
   ctx2d.fillStyle = 'rgba(248,113,113,0.9)';
-  const bw = scale * 1.2;
-  const bh = scale * 0.5;
+  const bw = scale * 1.7;
+  const bh = scale * 0.62;
   const bx = sx(baseX) - bw / 2;
-  const by = sy(baseZ - 1.2);
+  const by = sy(baseZ - 1.6);
   roundRect(ctx2d, bx, by, bw, bh, bh / 2);
   ctx2d.fill();
   ctx2d.fillStyle = '#fff';
-  ctx2d.font = `bold ${Math.floor(scale * 0.35)}px sans-serif`;
+  ctx2d.font = `bold ${Math.floor(scale * 0.42)}px sans-serif`;
   ctx2d.textAlign = 'center';
-  ctx2d.fillText(String(clash.enemyLeft), sx(baseX), by + bh * 0.7);
+  ctx2d.fillText(String(clash.enemyLeft), sx(baseX), by + bh * 0.72);
 }
 
 function drawPlayerCrowd(state, sx, sy, scale) {
@@ -790,15 +883,20 @@ function loop(time) {
   }
 
   if (running && state) {
-    tickAccum += dt;
-    const stepMs = 1000 / L.meta.tickRate;
-    let steps = 0;
-    while (tickAccum >= stepMs && steps < 5) {
-      tickAccum -= stepMs;
-      step();
-      steps++;
+    if (performance.now() < hitStopUntil) {
+      tickAccum = 0;
+    } else {
+      tickAccum += dt;
+      const stepMs = 1000 / L.meta.tickRate;
+      let steps = 0;
+      while (tickAccum >= stepMs && steps < 5) {
+        tickAccum -= stepMs;
+        step();
+        steps++;
+      }
     }
   }
+  if (shake > 0.3) shake *= 0.82; else shake = 0;
 
   // Update particles/popups
   for (let i = particles.length - 1; i >= 0; i--) {

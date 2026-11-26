@@ -26,7 +26,7 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - assets/cover.png 1280×720, game-canvas only: crowd of 25 under a +5/+8 gate, HUD visible.
 
 ## Known gaps (P2)
-- Visual density is v1-minimal: runners are small and the track is sparse between gates. Planned polish: larger runner glyphs, wider crowd spread, taller glowing gate panels, side-stand decorations, clash close-up framing.
+- Visual density, gate/track richness and clash presentation are now polished (runs 2–4). Remaining planned polish: difficulty tuning from simulate margins, richer SFX layering, levels 11–12.
 - Human play-feel (steering weight, gate readability at full speed) is judged from playtest frames; simulation proves rules and balance only.
 - Audio is synthesized WebAudio; headless playtest cannot prove how it sounds.
 
@@ -46,3 +46,10 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win. Contact sheet verified visually: taller glowing gates with readable pill labels (+15/+3, -30/×2), side stands with flags/dots on both edges, lane dividers visible, no broken frames.
 - Cover recaptured: early-run frame shows the crowd of 10, the new side stands (flags + spectator dots) and lane dividers; headless capture runs slower than real time so no gate is in frame yet. Note: this run's cover click on #start reported "Node is either not clickable or not an Element" but the game still started (phase playing, crowd 10) and the screenshot saved fine.
 - Remaining polish: clash framing, difficulty tuning, sound layering, levels 11–12.
+
+
+## 2026-11-27 ~01:50 IST — clash presentation: bigger enemy crowd, impact shake/numbers, hit-stop (run 4)
+- Change (client.js only, logic.js untouched): enemy crowd redrawn bigger — up to 60 figures (was 30) at 1.35× size in two ranks (front/back arcs), red glow ellipse + dashed arena ring, larger count badge. On clashStart a glowing "⚔ CLASH!" banner shows for 1.4 s with a low horn and a shake jolt. On every clashHit: screen shake (magnitude 9, decaying), ~110 ms hit-stop freeze of the game loop, floating "-N" damage numbers over the enemy and over the player's crowd, red/gold particle bursts. Pulsing red vignette frames the screen while the clash runs. Draw functions generated via River DeepSeek (gen.py) and spliced into gen-client.js; no logic/balance changes.
+- Local harness: ALL PASS (pilot wins all 10 levels, idle loss tick 583, always-left loss tick 472, deterministic, referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46). Playtest authoritative state confirms clashStart + clashHit events fired (clashTicks 5, enemyLeft 0).
+- Cover recaptured: early-run frame (crowd of 10, side stands + lane dividers visible). Note: cover #start click again reported "Node is either not clickable or not an Element" but the game still started and the screenshot saved (same flaky timing as run 3, not a code issue).
