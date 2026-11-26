@@ -138,20 +138,20 @@ const config = {
     {
       name: 'Gauntlet',
       start: 50,
-      enemy: 2600,
+      enemy: 8000,
       rows: [
         { gap: 68, kind: 'gate', left: { k: '+', v: 90 }, right: { k: 'x', v: 2 } },
         { gap: 68, kind: 'trap', x0: 4.4, x1: 7.0, loss: 70 },
-        { gap: 68, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 150 } },
+        { gap: 68, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 150 } },
         { gap: 68, kind: 'gate', left: { k: '+', v: 200 }, right: { k: 'x', v: 2 } },
         { gap: 68, kind: 'trap', x0: 1.0, x1: 3.6, loss: 70 },
         { gap: 68, kind: 'bonus', x0: 3.0, x1: 5.6, gain: 120 },
         { gap: 68, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '-', v: 300 } },
-        { gap: 68, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 450 } },
+        { gap: 68, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 450 } },
         { gap: 68, kind: 'trap', x0: 2.8, x1: 5.4, loss: 80 },
-        { gap: 68, kind: 'gate', left: { k: '+', v: 600 }, right: { k: 'x', v: 3 } },
+        { gap: 68, kind: 'gate', left: { k: '+', v: 600 }, right: { k: 'x', v: 2 } },
         { gap: 68, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '/', v: 2 } },
-        { gap: 68, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 500 } }
+        { gap: 68, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 500 } }
       ]
     },
     {

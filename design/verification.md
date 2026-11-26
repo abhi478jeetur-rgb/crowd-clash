@@ -8,7 +8,7 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - weak (always-left steps): **LOSS** at tick 472 — crowd 0 on the −30 gate, partway through the run (4 of 5 rows reached)
 
 ## Local harness (node, same logic.js)
-- pilot wins all 10 levels: PASS (final crowds 89, 359, 868, 3000, 3840, 12960, 16560, 51840, 103680, 573480)
+- pilot wins all 10 levels: PASS (final crowds 89, 359, 868, 3000, 3840, 12960, 16560, 51840, 21759, 121648)
 - determinism (two identical pilot runs): PASS
 - referenceRoute replay: PASS (13 steps, win)
 - viewFor JSON-serializable; isGameOver shape; 50-tick two-player validate smoke: PASS
@@ -60,5 +60,14 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Change (logic.js config only, client.js untouched): L10 enemy 4,500 → 45,000 and four ×3 gates softened to ×2 (rows 2, 4, 6, 8). Pilot win margin 127.44× → **2.70×** (pilot crowd 121,648 vs enemy 45,000, win tick 893). All other levels unchanged (L1 3.56×, L2 5.98×, L3–L9 still >6× — next tuning runs take the next most extreme level).
 - Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all assertions PASS (playerCount, phase win, scriptedMovement 3.9, mobileHorizontalOverflow, 4 self-tests), phase reached win (tick 579, crowd 15).
+- Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
+- Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.
+
+---
+
+## 2026-11-27 ~02:45 IST — difficulty tuning: Level 9 'Gauntlet' margin smoothed (run 6)
+- Change (logic.js config only, client.js untouched): L9 enemy 2,600 → 8,000 and four ×3 gates softened to ×2 (rows 3, 8, 10, 12). Pilot win margin 39.88× → **2.72×** (pilot crowd 21,759 vs enemy 8,000, win tick 917). All other levels unchanged (L1 3.56×, L2 5.98×, L3 7.23×, L4 13.64×, L5 10.11×, L6 19.94×, L7 16.56×, L8 32.40×, L10 2.70× — next tuning runs take the next most extreme level, L8 32.40×).
+- Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 8 assertions PASS (playerCount, phase win, scriptedMovement 3.9, mobileHorizontalOverflow, 4 self-tests), phase reached win (tick 572, crowd 46).
 - Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
 - Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.
