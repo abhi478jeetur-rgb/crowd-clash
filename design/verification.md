@@ -71,3 +71,12 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 8 assertions PASS (playerCount, phase win, scriptedMovement 3.9, mobileHorizontalOverflow, 4 self-tests), phase reached win (tick 572, crowd 46).
 - Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
 - Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.
+
+---
+
+## 2026-11-27 ~03:15 IST — difficulty tuning: Level 8 'High Stakes' margin smoothed (run 7)
+- Change (logic.js config only, client.js untouched): L8 enemy 1,600 → 6,100 and three ×3 gates softened to ×2 (rows 2, 4, 9). Pilot win margin 32.40× → **2.70×** (pilot crowd 16,480 vs enemy 6,100, win tick 871; final crowd 15,969). All other levels unchanged (L1 3.64×, L2 6.00×, L3 7.25×, L4 13.64×, L5 10.11×, L6 19.94×, L7 16.56×, L9 2.80×, L10 2.78× — next tuning runs take the next most extreme level, L6 19.94×).
+- Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46).
+- Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
+- Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.

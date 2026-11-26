@@ -120,17 +120,17 @@ const config = {
     {
       name: 'High Stakes',
       start: 40,
-      enemy: 1600,
+      enemy: 6100,
       rows: [
         { gap: 70, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 75 } },
-        { gap: 70, kind: 'gate', left: { k: '+', v: 120 }, right: { k: 'x', v: 3 } },
+        { gap: 70, kind: 'gate', left: { k: '+', v: 120 }, right: { k: 'x', v: 2 } },
         { gap: 70, kind: 'trap', x0: 2.0, x1: 4.8, loss: 55 },
-        { gap: 70, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 140 } },
+        { gap: 70, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 140 } },
         { gap: 70, kind: 'gate', left: { k: '-', v: 200 }, right: { k: 'x', v: 2 } },
         { gap: 70, kind: 'bonus', x0: 5.0, x1: 7.6, gain: 90 },
         { gap: 70, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 300 } },
         { gap: 70, kind: 'trap', x0: 3.8, x1: 6.4, loss: 55 },
-        { gap: 70, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '/', v: 2 } },
+        { gap: 70, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '/', v: 2 } },
         { gap: 70, kind: 'gate', left: { k: '+', v: 400 }, right: { k: 'x', v: 2 } },
         { gap: 70, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '-', v: 250 } }
       ]
