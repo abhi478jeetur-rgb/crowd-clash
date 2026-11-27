@@ -116,3 +116,12 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46).
 - Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken/empty frames.
 - Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates. Working copy design-verification.md was one run behind the game dir (missing run 10) — resynced from the game dir before appending run 11.
+
+---
+
+## 2026-11-27 ~05:45 IST — difficulty tuning: Level 3 'Drum Run' margin smoothed (run 12)
+- Change (logic.js config only, client.js untouched): L3 enemy 120 → 215 and the ×3 gate softened to ×2 (row 8). Pilot win margin 7.23× → **2.61×** (pilot crowd 562 vs enemy 215, win tick 781). All other levels unchanged (L1 3.56×, L2 5.98×, L4 2.62×, L5 2.76×, L6 2.67×, L7 2.80×, L8 2.62×, L9 2.72×, L10 2.70× — next tuning runs take the next most extreme level, L2 5.98×).
+- Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 579, crowd 15).
+- Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken frames (2 trailing grid cells empty — only 7 screenshots in the run).
+- Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.

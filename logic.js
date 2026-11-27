@@ -37,7 +37,7 @@ const config = {
     {
       name: 'Drum Run',
       start: 15,
-      enemy: 120,
+      enemy: 215,
       rows: [
         { gap: 85, kind: 'gate', left: { k: '+', v: 20 }, right: { k: 'x', v: 2 } },
         { gap: 85, kind: 'bonus', x0: 3.2, x1: 5.8, gain: 25 },
@@ -46,7 +46,7 @@ const config = {
         { gap: 85, kind: 'gate', left: { k: '-', v: 40 }, right: { k: 'x', v: 2 } },
         { gap: 85, kind: 'gate', left: { k: '+', v: 50 }, right: { k: '/', v: 2 } },
         { gap: 85, kind: 'trap', x0: 5.2, x1: 7.6, loss: 15 },
-        { gap: 85, kind: 'gate', left: { k: 'x', v: 3 }, right: { k: '+', v: 60 } }
+        { gap: 85, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 60 } }
       ]
     },
     {
