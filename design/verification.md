@@ -125,3 +125,12 @@ All gates run against the shipped files on 2026-11-26 (OpenGame MCP, headless Ch
 - Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 579, crowd 15).
 - Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken frames (2 trailing grid cells empty — only 7 screenshots in the run).
 - Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.
+
+---
+
+## 2026-11-27 ~06:15 IST — difficulty tuning: Level 2 'Warm Up' margin smoothed (run 13)
+- Change (logic.js config only, client.js untouched): L2 enemy 60 → 133. Pilot win margin 5.98× → **2.62×** (pilot crowd 348 vs enemy 133, win tick 726). All other levels unchanged (L1 3.56×, L3 2.61×, L4 2.62×, L5 2.76×, L6 2.67×, L7 2.80×, L8 2.62×, L9 2.72×, L10 2.70× — all levels now sit in the 2.6–3.6× band; difficulty tuning (item 4) is complete, next item is sound polish, item 5).
+- Local harness: ALL PASS (pilot wins all 10 levels; idle loss tick 583; always-left loss tick 472; deterministic; referenceRoute win).
+- Server gates: validate PASS (no diagnostics) · simulate reference WIN tick 570 [player-1] · idle LOSS tick 583 · always-left LOSS tick 472 · playtest 0 console errors, 0 failed requests, all 4 self-tests PASS, phase reached win (tick 572, crowd 46).
+- Contact sheet visually verified: gates readable (+15/+3, −30/×2), crowd visible, no broken frames (2 trailing grid cells empty — only 7 screenshots in the run).
+- Notes: no visual change, so cover was not recaptured. Studio was down at run start (curl 000) and was restarted with the standard command before the gates.

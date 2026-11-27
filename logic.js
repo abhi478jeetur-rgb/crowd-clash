@@ -23,7 +23,7 @@ const config = {
     {
       name: 'Warm Up',
       start: 12,
-      enemy: 60,
+      enemy: 133,
       rows: [
         { gap: 85, kind: 'gate', left: { k: '+', v: 10 }, right: { k: '+', v: 18 } },
         { gap: 90, kind: 'gate', left: { k: 'x', v: 2 }, right: { k: '+', v: 15 } },
